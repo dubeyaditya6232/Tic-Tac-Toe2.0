@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>TIC-TAC-TOE</title>
+        <style>
+            *{
+                box-sizing: border-box
+            }
+            .container{width:300px;overflow:hidden;margin:50px auto 0 auto;}
+            .container span{width:100%;display:block;text-align: center;
+                            font-family:sans-serif;color:#fff;font-size: 25px;
+                            background: #446CB3;}
+            .container .box{float:left;width:100px;height:100px;border:1px solid black;
+            transition:all .25s ease-in-out;font-family:sans-serif;
+            font-size:85px;text-align:center;line-height:100px;
+            cursor:pointer;}
+            .container .box:hover{background: rgba(10,10,10,0.5);color:#fff;}
+            button{background:#26C281;color:#fff;font-weight:bold;
+            border:1px solid yellow;cursor:pointer;width: 200px;height:40px;font-size:22px;
+            display:block;margin:10px auto;}
+            .win{background:#F9690E;color:#fff;}
+            #footer{background-color: dimgrey;text-align: center;width: 100%;height: 20px;}
+            #mp{background-color: blue;text-align: center;height: 30px;font-size: 25px; font-family: sans-serif;}
+            #options{width:100%;display:block;text-align: center;
+                     font-family:sans-serif;color:#fff;font-size: 25px;background: #446CB3;}
+        </style>
+    </head>
+    <body>
+        <span id="options">SELECT</span>
+        <button onclick="singleplayer()">singleplayer</button>
+        <button onclick="multiplayer()">Multiplayer</button>
+        <p id="mp">YOUR CHOICE</p>
+        <div class="container" id="main">
+            <span id="turn">Play</span>
+            <div class="box" id="box1"></div>
+            <div class="box" id="box2"></div>
+            <div class="box" id="box3"></div>
+            <div class="box" id="box4"></div>
+            <div class="box" id="box5"></div>
+            <div class="box" id="box6"></div>
+            <div class="box" id="box7"></div>
+            <div class="box" id="box8"></div>
+            <div class="box" id="box9"></div>
+        </div>
+        <button onclick="replay()">Play Again</button>
+        <script>
+             var turn=document.getElementById("turn"),i,b=0,
+                boxes=document.querySelectorAll("#main div"),x_or_o=0;
+            function selectWinnerBoxes(b1,b2,b3){
+                b1.classList.add("win");
+                b2.classList.add("win");
+                b3.classList.add("win");
+                b=1;
+                turn.innerHTML=b1.innerHTML+" Won,congrats";
+                turn.style.fontSize="40px";
+                /*alert(c);*/
+                }
+            function draw(){
+                turn.innerHTML="GameOver";
+                turn.style.fontSize="40px";
+                /*alert(a);*/
+            }
+            function getWinner(){
+                var box1=document.getElementById("box1"),
+                    box2=document.getElementById("box2"),
+                    box3=document.getElementById("box3"),
+                    box4=document.getElementById("box4"),
+                    box5=document.getElementById("box5"),
+                    box6=document.getElementById("box6"),
+                    box7=document.getElementById("box7"),
+                    box8=document.getElementById("box8"),
+                    box9=document.getElementById("box9");
+                // writing all winning possibilities
+                if(box1.innerHTML!=="" && box1.innerHTML===box2.innerHTML && box1.innerHTML===box3.innerHTML)
+                     {selectWinnerBoxes(box1,box2,box3);}
+                if(box4.innerHTML!=="" && box4.innerHTML===box5.innerHTML && box4.innerHTML===box6.innerHTML)
+                     {selectWinnerBoxes(box4,box5,box6);}
+                if(box7.innerHTML!=="" && box7.innerHTML===box8.innerHTML && box7.innerHTML===box9.innerHTML)
+                    {selectWinnerBoxes(box7,box8,box9);}
+                if(box1.innerHTML!=="" && box1.innerHTML===box4.innerHTML && box1.innerHTML===box7.innerHTML)
+                     {selectWinnerBoxes(box1,box4,box7);}
+                if(box2.innerHTML!=="" && box2.innerHTML===box5.innerHTML && box2.innerHTML===box8.innerHTML)
+                     {selectWinnerBoxes(box2,box5,box8);}
+                if(box3.innerHTML!=="" && box3.innerHTML===box6.innerHTML && box3.innerHTML===box9.innerHTML)
+                     {selectWinnerBoxes(box3,box6,box9);}
+                if(box1.innerHTML!=="" && box1.innerHTML===box5.innerHTML && box1.innerHTML===box9.innerHTML)
+                     {selectWinnerBoxes(box1,box5,box9);}
+                if(box3.innerHTML!=="" && box3.innerHTML===box5.innerHTML && box3.innerHTML===box7.innerHTML)
+                     {selectWinnerBoxes(box3,box5,box7);}
+            }
+            function replay(){
+                    for(var i=0;i<boxes.length;i++){
+                        boxes[i].classList.remove("win");
+                        boxes[i].innerHTML="";
+                        x_or_o=0;
+                        turn.innerHTML="Play";
+                        turn.style.fontSize="25px";
+                        mp.innerHTML="YOUR CHOICE";
+                    }
+                }
+                var choice;
+                function bot_choice()
+                {
+                    if(x_or_o===1)
+                    {
+                        choice=Math.floor(Math.random()*boxes.length);
+                        
+                    }
+                    else
+                    {
+                        if(box3.innerHTML===""&& box1.innerHTML==="0" && box2.innerHTML==="0")
+                        box3.innerHTML="0";
+                        else if(box2.innerHTML===""&& box1.innerHTML==="0"&&box3.innerHTML==="0")
+                        box2.innerHTML="0";
+                        else if(box1.innerHTML===""&& box2.innerHTML==="0"&&box3.innerHTML==="0")
+                        box1.innerHTML="0";
+                        else if(box7.innerHTML===""&& box1.innerHTML==="0"&&box4.innerHTML==="0")
+                        box7.innerHTML="0";
+                        else if(box4.innerHTML===""&& box1.innerHTML==="0"&&box7.innerHTML==="0")
+                        box4.innerHTML="0";
+                        else if(box6.innerHTML===""&& box4.innerHTML==="0"&&box5.innerHTML==="0")
+                        box6.innerHTML="0";
+                        else if(box5.innerHTML===""&& box4.innerHTML==="0"&&box6.innerHTML==="0")
+                        box5.innerHTML="0";
+                        else if(box4.innerHTML===""&& box5.innerHTML==="0"&&box6.innerHTML==="0")
+                        box4.innerHTML="0";
+                        else if(box1.innerHTML===""&& box4.innerHTML==="0"&&box7.innerHTML==="0")
+                        box1.innerHTML="0";
+                        else if(box9.innerHTML===""&& box7.innerHTML==="0"&&box8.innerHTML==="0")
+                        box9.innerHTML="0";
+                        else if(box8.innerHTML===""&& box7.innerHTML==="0"&&box9.innerHTML==="0")
+                        box8.innerHTML="0";
+                        else if(box7.innerHTML===""&& box8.innerHTML==="0"&&box9.innerHTML==="0")
+                        box7.innerHTML="0";
+                        else if(box8.innerHTML===""&& box2.innerHTML==="0"&&box5.innerHTML==="0")
+                        box8.innerHTML="0";
+                        else if(box5.innerHTML===""&& box2.innerHTML==="0"&&box8.innerHTML==="0")
+                        box5.innerHTML="0";
+                        else if(box2.innerHTML===""&& box8.innerHTML==="0"&&box5.innerHTML==="0")
+                        box2.innerHTML="0";
+                        else if(box9.innerHTML===""&& box3.innerHTML==="0"&&box6.innerHTML==="0")
+                        box9.innerHTML="0";
+                        else if(box6.innerHTML===""&& box3.innerHTML==="0"&&box9.innerHTML==="0")
+                        box6.innerHTML="0";
+                        else if(box3.innerHTML===""&& box6.innerHTML==="0"&&box9.innerHTML==="0")
+                        box3.innerHTML="0";
+                        else if(box5.innerHTML===""&& box1.innerHTML==="0"&&box9.innerHTML==="0")
+                        box5.innerHTML="0";
+                        else if(box1.innerHTML===""&& box5.innerHTML==="0"&&box9.innerHTML==="0")
+                        box1.innerHTML="0";
+                        else if(box9.innerHTML===""&& box1.innerHTML==="0"&&box5.innerHTML==="0")
+                        box9.innerHTML="0";
+                        else if(box5.innerHTML===""&& box3.innerHTML==="0"&&box7.innerHTML==="0")
+                        box5.innerHTML="0";
+                        else if(box7.innerHTML===""&& box3.innerHTML==="0"&&box5.innerHTML==="0")
+                        box7.innerHTML="0";
+                        else if(box3.innerHTML===""&& box5.innerHTML==="0"&& box7.innerHTML==="0")
+                        box3.innerHTML="0";
+                        else if(box3.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box2.innerHTML)
+                        box3.innerHTML="0";
+                        else if(box2.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box3.innerHTML)
+                        box2.innerHTML="0";
+                        else if(box1.innerHTML===""&& box2.innerHTML!==""&& box2.innerHTML===box3.innerHTML)
+                        box1.innerHTML="0";
+                        else if(box7.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box4.innerHTML)
+                        box7.innerHTML="0";
+                        else if(box4.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box7.innerHTML)
+                        box4.innerHTML="0";
+                        else if(box6.innerHTML===""&& box4.innerHTML!==""&& box4.innerHTML===box5.innerHTML)
+                        box6.innerHTML="0";
+                        else if(box5.innerHTML===""&& box4.innerHTML!==""&& box4.innerHTML===box6.innerHTML)
+                        box5.innerHTML="0";
+                        else if(box4.innerHTML===""&& box5.innerHTML!==""&& box5.innerHTML===box6.innerHTML)
+                        box4.innerHTML="0";
+                        else if(box1.innerHTML===""&& box4.innerHTML!==""&& box4.innerHTML===box7.innerHTML)
+                        box1.innerHTML="0";
+                        else if(box9.innerHTML===""&& box7.innerHTML!==""&& box7.innerHTML===box8.innerHTML)
+                        box9.innerHTML="0";
+                        else if(box8.innerHTML===""&& box7.innerHTML!==""&& box7.innerHTML===box9.innerHTML)
+                        box8.innerHTML="0";
+                        else if(box7.innerHTML===""&& box8.innerHTML!==""&& box8.innerHTML===box9.innerHTML)
+                        box7.innerHTML="0";
+                        else if(box8.innerHTML===""&& box2.innerHTML!==""&& box2.innerHTML===box5.innerHTML)
+                        box8.innerHTML="0";
+                        else if(box5.innerHTML===""&& box2.innerHTML!==""&& box2.innerHTML===box8.innerHTML)
+                        box5.innerHTML="0";
+                        else if(box2.innerHTML===""&& box8.innerHTML!==""&& box8.innerHTML===box5.innerHTML)
+                        box2.innerHTML="0";
+                        else if(box9.innerHTML===""&& box3.innerHTML!==""&& box3.innerHTML===box6.innerHTML)
+                        box9.innerHTML="0";
+                        else if(box6.innerHTML===""&& box3.innerHTML!==""&& box3.innerHTML===box9.innerHTML)
+                        box6.innerHTML="0";
+                        else if(box3.innerHTML===""&& box6.innerHTML!==""&& box6.innerHTML===box9.innerHTML)
+                        box3.innerHTML="0";
+                        else if(box5.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box9.innerHTML)
+                        box5.innerHTML="0";
+                        else if(box1.innerHTML===""&& box5.innerHTML!==""&& box5.innerHTML===box9.innerHTML)
+                        box1.innerHTML="0";
+                        else if(box9.innerHTML===""&& box1.innerHTML!==""&& box1.innerHTML===box5.innerHTML)
+                        box9.innerHTML="0";
+                        else if(box5.innerHTML===""&& box3.innerHTML!==""&& box3.innerHTML===box7.innerHTML)
+                        box5.innerHTML="0";
+                        else if(box7.innerHTML===""&& box3.innerHTML!==""&& box3.innerHTML===box5.innerHTML)
+                        box7.innerHTML="0";
+                        else if(box3.innerHTML===""&& box5.innerHTML!==""&& box5.innerHTML===box7.innerHTML)
+                        box3.innerHTML="0";
+                        else
+                        {
+                            for(i=0;i<boxes.length;i++)
+                            {
+                                if(boxes[i].innerHTML==="")
+                                {
+                                    boxes[i].innerHTML="0";
+                                    console.log("Aditya");
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+                var uchoice,j=0;
+            function singleplayer()
+            {
+                mp.innerHTML="You chose to play SinglePlayer game";
+                for(var i=0;i<boxes.length;i++){
+                        boxes[i].classList.remove("win");
+                        boxes[i].innerHTML="";
+                        x_or_o=0;
+                        turn.innerHTML="Play";
+                        turn.style.fontSize="25px";
+                        /*mp.innerHTML="YOUR CHOICE";*/
+                    }
+                for(i=0;i<boxes.length;i++)
+                {
+                    boxes[i].onclick=function()
+                    {
+                        if(this.innerHTML!=="x" && this.innerHTML!=="0")
+                        {
+                                this.innerHTML="x";
+                                turn.innerHTML="Computer turn now";
+                                x_or_o+=1;
+                            
+                                bot_choice();
+                                if(x_or_o===1)
+                                for(i=0;i<boxes.length;i++)
+                                {
+                                    if(boxes[i].innerHTML==="")
+                                    {
+                                        boxes[choice].innerHTML="0";
+                                        break;
+                                    }
+                                    
+                                    else
+                                    bot_choice();
+                                }
+                                turn.innerHTML="User turn now";
+                                x_or_o+=1;
+                                console.log(x_or_o);
+                                getWinner();
+                           if(x_or_o%10===0)
+                            draw();
+                        }
+                    };
+                }
+
+            }
+            var multi=document.getElementById(mp);
+            function multiplayer()
+            {
+                mp.innerHTML="You chose to play MultiPlayer game";
+                for(var i=0;i<boxes.length;i++){
+                        boxes[i].classList.remove("win");
+                        boxes[i].innerHTML="";
+                        x_or_o=0;
+                        turn.innerHTML="Play";
+                        turn.style.fontSize="25px";
+                        /*mp.innerHTML="YOUR CHOICE";*/
+                    }
+                for(i=0;i<boxes.length;i++)
+                {
+                    boxes[i].onclick=function(){
+                        if(this.innerHTML!=="X"&& this.innerHTML!=="0"){
+                        if(x_or_o%2===0){
+                            console.log(x_or_o);
+                            this.innerHTML="X";
+                            turn.innerHTML="O turn now";
+                            getWinner();
+                            x_or_o+=1;
+                        }
+                        else{
+                            console.log(x_or_o);
+                            this.innerHTML="0";
+                            turn.innerHTML="X turn now";
+                            getWinner();
+                            x_or_o+=1;
+                        }
+                        if(b!=1)
+                        if(x_or_o%9===0)
+                            draw();
+                    }
+                    };
+                    }
+
+            }
+        </script>
+        <footer id="footer">
+            &copy;2020 by Aditya Kumar Dubey
+         </footer>
+    </body>
+</html>
